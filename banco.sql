@@ -46,20 +46,19 @@ REFERENCES
 
 
 insert into pacientes (nome_paciente, sexo)
-values ('Luiz','m'), ('Gabriela','f'), ('Érica','f');
+values ('Luiz','m'), ('Gabriela','f'), ('Erica','f');
 
 insert into profissionais(nomeProfissionais)
-values ('Karla'), ('Érick'), ('Heitor');
+values ('Karla'), ('Erick'), ('Heitor');
 
 insert into especialidades (especialidade)
-values ('Clínica geral'), ('Urologista'), ('Cardiologista');
+values ('Clinica geral'), ('Urologista'), ('Cardiologista');
 
 insert into consultas (id_especialidades, id_pacientes, id_profissionais)
 values (2,1,1), (1,2,2), (3,3,3);
 
 
 DROP TABLE consultas;
-
 
 select * from pacientes;
 select * from profissionais;
