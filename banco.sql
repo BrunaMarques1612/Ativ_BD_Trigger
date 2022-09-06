@@ -1,30 +1,33 @@
 CREATE TABLE pacientes(
-id serial PRIMARY KEY,
-nome varchar(40) not null,
+id_pacientes int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+nome_paciente varchar(40) not null,
 sexo varchar(1),
 obito boolean,
-insertedAt TIMESTAMP NOT NULL DEFAULT NOW()
+insertDate TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE profissionais(
-id serial PRIMARY KEY,
-nome varchar(50)
+id_profissionais int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+nome_profissionais varchar(50),
+insertDate TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE especialidades(
-id serial PRIMARY KEY,
-nome varchar(50)
+id_especialidade int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+nome_especialidades varchar(50),
+insertDate TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE consultas(
-id serial PRIMARY KEY,       
+id_consultas int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,       
 especialidade_id integer, 
 pacientes_id integer,
-profissionais_id integer
+profissionais_id integer,
+insertDate TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE obitos(
-id serial PRIMARY KEY,
+id_obitos serial PRIMARY KEY,
 obs text
 );
 
@@ -42,11 +45,41 @@ REFERENCES
     profissionais(id);
 
 
+insert into pacientes (nome_paciente, sexo)
+values ('Luiz','m'), ('Gabriela','f'), ('Érica','f');
+
+insert into profissionais(nomeProfissionais)
+values ('Karla'), ('Érick'), ('Heitor');
+
+insert into especialidades (especialidade)
+values ('Clínica geral'), ('Urologista'), ('Cardiologista');
+
+insert into consultas (id_especialidades, id_pacientes, id_profissionais)
+values (2,1,1), (1,2,2), (3,3,3);
+
+
+DROP TABLE consultas;
+
+
+select * from pacientes;
+select * from profissionais;
+select * from especialidades;
+select * from consultas;
+
+
 ALTER TABLE consultas ADD COLUMN last_user_updated varchar(100);
 ALTER TABLE consultas ADD COLUMN last_time_updated timestamp;
 
 
-CREATE OR REPLACE FUNCTION trgValidaDadosConsulta()  RETURNS trigger AS $trgValidarDadosConsulta$
+select c.id_consultas, pac.nome_Paciente, p.nome_Profissionais, e.especialidade, c.insertDate
+	from consultas as c
+	inner join pacientes as pac on pac.id_pacientes = c.id_pacientes
+	inner join especialidades as e on e.id_especialidades = c.id_especialidades
+	inner join profissionais as p on p.id_profissionais = c.id_profissionais
+
+
+CREATE OR REPLACE FUNCTION trgValidaDadosConsulta()  
+RETURNS trigger AS $trgValidarDadosConsulta$
 
 
 DECLARE
