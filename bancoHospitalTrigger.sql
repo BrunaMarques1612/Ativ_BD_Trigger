@@ -40,6 +40,11 @@ CREATE TABLE consultas (
 	insertDate TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+DROP TABLE consultas;
+DROP TABLE pacientes;
+DROP TABLE profissionais;
+DROP TABLE especialidades;
+
 
 ALTER TABLE consultas
 ADD CONSTRAINT FKEspecialidadeDaConsulta FOREIGN KEY    
@@ -69,35 +74,26 @@ values ('Ginecologista'), ('Urologista'), ('Cardiologista');
 insert into consultas (id_pacientes, id_profissionais, id_especialidades)
 values (1,1,1), (2,2,2), (3,3,3);
 
--- pacientes do sexo masculino (m) que se consultarão com o Urologista
 insert into consultas (id_pacientes, id_profissionais, id_especialidades)
 values (2,2,2);
 
--- pacientes do sexo feminino (f) que se consultarão com o Ginecologista
 insert into consultas (id_pacientes, id_profissionais, id_especialidades)
 values (1,1,1), (3,1,1);
 
--- pacientes que se consultarão com o Cardiologista
 insert into consultas (id_pacientes, id_profissionais, id_especialidades)
 values (1,3,3), (2,3,3), (3,3,3);
 
--- valor null pra paciente
-insert into consultas (id_especialidades, id_profissionais)
-values (1,1);
-
---valor null para especialidade
-insert into consultas (id_pacientes, id_profissionais)
-values (2,1);
-
---valor null para profissional
+--null para profissional
 insert into consultas (id_especialidades, id_pacientes)
 values (3,3);
 
+--null para especialidade
+insert into consultas (id_pacientes, id_profissionais)
+values (2,2);
 
-DROP TABLE consultas;
-DROP TABLE pacientes;
-DROP TABLE profissionais;
-DROP TABLE especialidades;
+-- null pra paciente
+insert into consultas (id_especialidades, id_profissionais)
+values (1,1);
 
 
 select * from pacientes;
